@@ -7,5 +7,6 @@ app.get('/', function(req, res) {
 });
 
 // Listen
-app.listen(3000);
-console.log('Listening on localhost:3000');
+var port = process.env.port || 3000;
+app.listen(port);
+console.log('Listening on localhost:'+ port);
