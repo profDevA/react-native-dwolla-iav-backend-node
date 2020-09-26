@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dwolla</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.dwolla.com/1/dwolla.js"></script>
+</head>
+
+<body>
+    <div id="mainContainer">
+        <input type="button" id="start" value="Add Bank" style="display: none;"/>
+    </div>
+
+    <div id="iavContainer"></div>
+</body>
+<script type="text/javascript">
+    $('#start').click(function () {
+        $.get("http://10.0.2.2:3000/getiavtoken", "data", function (data, status) {
+            console.log(data, status);
+            dwolla.configure('sandbox');
+            dwolla.iav.start(data.iavToken, {
+                container: 'iavContainer',
+                stylesheets: [
+                    'https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext'
+                ],
+                microDeposits: 'true',
+                fallbackToMicroDeposits: true
+            }, function (err, res) {
+                alert(err)
+                console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res));
+            });
+        });
+    });
+</script>
+
+
+</html>
